@@ -27,7 +27,7 @@ let currentUrl='';
 function makeEmbedUrl(raw){
   const u=new URL(raw);
   if(!/^https?:$/.test(u.protocol)) throw new Error('Please enter a valid Tableau URL.');
-  https://drive.google.com/file/d/1N6w3nvRAPtOmRzZqsGPIEzH1oIWoZ8sA/view?usp=sharing
+  "https://drive.google.com/file/d/1N6w3nvRAPtOmRzZqsGPIEzH1oIWoZ8sA/view?usp=sharing"
   u.searchParams.set('showVizHome','no');
   u.searchParams.set('toolbar','yes');
   return u.toString();
