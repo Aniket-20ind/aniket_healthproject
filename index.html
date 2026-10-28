@@ -16,35 +16,26 @@
 <main id="home" class="wrap">
 <section class="hero"><div><div class="eyebrow"><span class="dot"></span> Data-driven healthcare insights</div><h1>Understand risk.<br><span>Improve health.</span></h1><p>Health360 brings healthcare indicators into one clear view—helping explore BMI distribution, chronic disease patterns, lifestyle factors, and health-risk scores through an interactive Tableau dashboard.</p></div><aside class="hero-card"><div class="mini-head"><span>HEALTH RISK OVERVIEW</span><span class="status">● Analytics workspace</span></div><div class="pulse" aria-label="Decorative chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="pulse-labels"><span>Lifestyle</span><span>BMI</span><span>Age groups</span><span>Risk factors</span></div></aside></section>
 <section id="overview"><div class="section-head"><div><h2>Project overview</h2><p>A quick guide to the health indicators explored in this project.</p></div><span class="live-badge">HEALTH360 · TABLEAU PROJECT</span></div><div class="metrics"><article class="metric"><div class="metric-top"><span>Health Risk Score</span><span class="metric-icon">⌁</span></div><strong>Risk profile</strong><small>Explore the score distribution in Tableau</small></article><article class="metric"><div class="metric-top"><span>BMI Categories</span><span class="metric-icon">◉</span></div><strong>4 groups</strong><small>Underweight, normal, overweight, obese</small></article><article class="metric"><div class="metric-top"><span>Disease Indicators</span><span class="metric-icon">＋</span></div><strong>2+ areas</strong><small>Diabetes and heart disease patterns</small></article><article class="metric"><div class="metric-top"><span>Lifestyle Factors</span><span class="metric-icon">↗</span></div><strong>Multi-factor</strong><small>Smoking, exercise, age and more</small></article></div></section>
-<section id="dashboard" class="dash-section"><div class="section-head"><div><h2>Interactive Tableau dashboard</h2><p>Connect your published Health360 view below to enable live filters and tooltips.</p></div><span class="live-badge">↗ Tableau Web Integration</span></div><div class="embed-shell"><div class="embed-toolbar"><div><strong>Health360 · Comprehensive Healthcare Risk &amp; Disease Analysis</strong><br><span>Embedded interactive report</span></div><div class="embed-actions"><button class="btn" id="resetBtn" type="button">Reset view</button><button class="btn primary" id="openBtn" type="button">Open dashboard ↗</button></div></div><div id="embedArea"><div class="empty-state"><div class="empty-inner"><div class="empty-icon">▥</div><h3>Your Tableau dashboard goes here</h3><p>First publish the workbook to Tableau Public (or Tableau Cloud), then paste its share/view URL below. This page will embed the live dashboard—no screenshots required.</p><form class="url-row" id="urlForm"><input id="tableauUrl" type="url" placeholder="https://public.tableau.com/views/YourWorkbook/YourView" aria-label="Tableau published view URL" required><button class="btn primary" type="submit">Connect dashboard</button></form><p class="hint">Use the published view URL, not a local .twb/.twbx file. The dashboard must be publicly accessible for visitors to see it.</p></div></div></div></div></section>
+<section id="dashboard" class="dash-section"><div class="section-head"><div><h2>Interactive Tableau dashboard</h2><p>Connect your published Health360 view below to enable live filters and tooltips.</p></div><span class="live-badge">↗ Tableau Web Integration</span></div><div class="embed-shell"><div class="embed-toolbar"><div><strong>Health360 · Comprehensive Healthcare Risk &amp; Disease Analysis</strong><br><span>Embedded interactive report</span></div><div class="embed-actions"><button class="btn" id="resetBtn" type="button">Reset view</button><button class="btn primary" id="openBtn" type="button">Open dashboard ↗</button></div></div><div id="embedArea">
+<div class="empty-state"><div class="empty-inner">
+<div class="empty-icon">▥</div>
+<h3>Open your Health360 workbook</h3>
+<p>Your Tableau workbook is saved in Google Drive. Click below to open its Drive file. Google Drive may download the <code>.twbx</code> workbook instead of displaying an interactive dashboard in the browser.</p>
+<button class="btn primary" id="viewDashboardBtn" type="button">View Tableau Dashboard ↗</button>
+<p class="hint">The Drive file must be shared with “Anyone with the link” for other viewers to access it.</p>
+</div></div></div></div></section>
 <section id="insights"><div class="section-head"><div><h2>What you can explore</h2><p>Use the Tableau dashboard to investigate patterns, not to diagnose individuals.</p></div></div><div class="insight-grid"><article class="insight"><span class="tag">01 · AGE</span><h3>Chronic disease by age group</h3><p>Compare diabetes and heart-disease indicators across age brackets to see how the pattern varies between groups.</p></article><article class="insight"><span class="tag">02 · LIFESTYLE</span><h3>Risk and lifestyle factors</h3><p>Explore how smoking status and exercise level relate to the health-risk measures represented in the dataset.</p></article><article class="insight"><span class="tag">03 · BMI</span><h3>BMI distribution</h3><p>Review underweight, normal-weight, overweight, and obese categories alongside other available health indicators.</p></article></div></section>
 </main><footer class="footer"><div class="wrap footer-inner"><span><b>Health360</b> · Healthcare Risk &amp; Disease Analysis</span><span>Built for data exploration · Not a medical diagnostic tool</span></div></footer>
 <script>
-const form=document.getElementById('urlForm');
-const urlInput=document.getElementById('tableauUrl');
-const embedArea=document.getElementById('embedArea');
-let currentUrl='';
-function makeEmbedUrl(raw){
-  const u=new URL(raw);
-  if(!/^https?:$/.test(u.protocol)) throw new Error('Please enter a valid Tableau URL.');
-  "https://drive.google.com/file/d/1N6w3nvRAPtOmRzZqsGPIEzH1oIWoZ8sA/view?usp=sharing"
-  u.searchParams.set('showVizHome','no');
-  u.searchParams.set('toolbar','yes');
-  return u.toString();
-}
-function connect(url){
-  const embedUrl=makeEmbedUrl(url);
-  currentUrl=url;
-  embedArea.innerHTML='';
-  const frame=document.createElement('iframe');
-  frame.className='embed-frame';frame.title='Health360 interactive Tableau dashboard';
-  frame.src=embedUrl;frame.allow='fullscreen';frame.loading='lazy';
-  frame.referrerPolicy='strict-origin-when-cross-origin';
-  embedArea.appendChild(frame);
-  document.getElementById('openBtn').disabled=false;
-}
-form.addEventListener('submit',e=>{e.preventDefault();try{connect(urlInput.value.trim());}catch(err){alert('Please paste a valid published Tableau view URL.');}});
-document.getElementById('openBtn').addEventListener('click',()=>{if(currentUrl)window.open(currentUrl,'_blank','noopener,noreferrer');else document.getElementById('tableauUrl').focus();});
-document.getElementById('resetBtn').addEventListener('click',()=>{currentUrl='';urlInput.value='';embedArea.innerHTML='<div class="empty-state"><div class="empty-inner"><div class="empty-icon">▥</div><h3>Your Tableau dashboard goes here</h3><p>First publish the workbook to Tableau Public (or Tableau Cloud), then paste its share/view URL below. This page will embed the live dashboard—no screenshots required.</p><form class="url-row" id="urlForm"><input id="tableauUrl" type="url" placeholder="https://public.tableau.com/views/YourWorkbook/YourView" aria-label="Tableau published view URL" required><button class="btn primary" type="submit">Connect dashboard</button></form><p class="hint">Use the published view URL, not a local .twb/.twbx file. The dashboard must be publicly accessible for visitors to see it.</p></div></div>';document.getElementById('tableauUrl').value='';document.getElementById('urlForm').addEventListener('submit',e=>{e.preventDefault();try{connect(document.getElementById('tableauUrl').value.trim());}catch(err){alert('Please paste a valid published Tableau view URL.');}});document.getElementById('tableauUrl').focus();});
+// Replace this placeholder with your Google Drive share link.
+const DRIVE_FILE_URL = "https://drive.google.com/file/d/1N6w3nvRAPtOmRzZqsGPIEzH1oIWoZ8sA/view?usp=sharing";
+
+document.getElementById('viewDashboardBtn').addEventListener('click', () => {
+  if (!DRIVE_FILE_URL.startsWith('https://drive.google.com/')) {
+    alert('Add your Google Drive share link in the DRIVE_FILE_URL line near the bottom of index.html first.');
+    return;
+  }
+  window.open(DRIVE_FILE_URL, '_blank', 'noopener,noreferrer');
+});
 </script>
 </body></html>
